@@ -1,28 +1,28 @@
-import {useState} from "react"
+import { useState } from "react"
 
-//guarda o valor digitado no campo de email e senha
+// Guarda o valor digitado no campo de email e senha
 function Login() {
-  const [email, setEmail] = useState("") 
+  const [email, setEmail] = useState("")
   const [senha, setSenha] = useState("")
 
-  //guarda a mensagem de erro do formulario
+  // Guarda a mensagem de erro do formulário
   const [erro, setErro] = useState("")
 
-  //executa quando o usuário clica no botão "Entrar"
-  const handleLogin = () => {
+  // Executa quando o usuário clica no botão "Entrar"
+  const handleLogin = (e) => {
     e.preventDefault()
 
-    if(!email || !senha){
-    setErro("Preencha e-mail e senha.")
+    if (!email || !senha) {
+      setErro("Preencha e-mail e senha.")
       return
     }
 
-    if(!email.includes("@")){
+    if (!email.includes("@")) {
       setErro("Digite um e-mail válido!")
       return
     }
 
-    if(senha.length < 6){
+    if (senha.length < 6) {
       setErro("A senha deve ter pelo menos 6 caracteres.")
       return
     }
@@ -34,14 +34,14 @@ function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-[#08070f] text-white flex flex-col items-center justify-center px-4">
+    <div className="min-h-screen bg-[var(--color-off-white)] text-[var(--color-dark-purple)] flex flex-col items-center justify-center px-4">
 
       {/* Logo */}
       <div className="flex flex-col items-center mb-12">
 
-        <div className="w-[72px] h-[72px] rounded-[18px] bg-gradient-to-br from-[#7c3aed] to-[#a855f7] flex items-center justify-center shadow-[0_0_35px_rgba(139,92,246,0.45)]">
-          <span className="text-white text-2xl font-bold">
-            icon
+        <div className="w-[72px] h-[72px] rounded-[18px] bg-[var(--color-dark-purple)] flex items-center justify-center">
+          <span className="text-[var(--color-off-white)] text-2xl font-bold">
+            Q
           </span>
         </div>
 
@@ -49,16 +49,16 @@ function Login() {
           QuizMaster
         </h1>
 
-        <p className="mt-1 text-[#7d72a8] text-base font-mono">
+        <p className="mt-1 text-[var(--color-dark-purple)] text-base">
           plataforma educacional integradora
         </p>
 
       </div>
 
       {/* Card de Login */}
-      <div className="w-full max-w-[504px] rounded-[18px] border border-[#26243a] bg-[#10101a] px-9 py-10">
+      <div className="w-full max-w-[504px] rounded-[18px] border-2 border-[var(--color-light-purple)] bg-white px-9 py-10">
 
-        <h2 className="text-[22px] font-bold mb-8">
+        <h2 className="text-[22px] font-bold mb-8 text-[var(--color-dark-purple)]">
           Entrar na conta
         </h2>
 
@@ -69,7 +69,7 @@ function Login() {
 
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-[#8176ad] mb-2"
+              className="block text-sm font-medium text-[var(--color-dark-purple)] mb-2"
             >
               EMAIL
             </label>
@@ -83,7 +83,7 @@ function Login() {
                 setErro("")
               }}
               placeholder="seu@email.com"
-              className="w-full h-[52px] rounded-lg border border-[#24233a] bg-[#171629] px-4 text-white placeholder:text-[#77728f] outline-none transition focus:border-[#8b5cf6] focus:ring-1 focus:ring-[#8b5cf6]"
+              className="w-full h-[52px] rounded-lg border-2 border-[var(--color-light-purple)] bg-[var(--color-off-white)] px-4 text-[var(--color-dark-purple)] placeholder:text-gray-400 outline-none transition focus:border-[var(--color-dark-purple)] focus:ring-1 focus:ring-[var(--color-dark-purple)]"
             />
 
           </div>
@@ -93,7 +93,7 @@ function Login() {
 
             <label
               htmlFor="senha"
-              className="block text-sm font-medium text-[#8176ad] mb-2"
+              className="block text-sm font-medium text-[var(--color-dark-purple)] mb-2"
             >
               SENHA
             </label>
@@ -107,14 +107,14 @@ function Login() {
                 setErro("")
               }}
               placeholder="••••••••"
-              className="w-full h-[52px] rounded-lg border border-[#24233a] bg-[#171629] px-4 text-white placeholder:text-[#77728f] outline-none transition focus:border-[#8b5cf6] focus:ring-1 focus:ring-[#8b5cf6]"
+              className="w-full h-[52px] rounded-lg border-2 border-[var(--color-light-purple)] bg-[var(--color-off-white)] px-4 text-[var(--color-dark-purple)] placeholder:text-gray-400 outline-none transition focus:border-[var(--color-dark-purple)] focus:ring-1 focus:ring-[var(--color-dark-purple)]"
             />
 
           </div>
 
           {/* Mensagem de erro */}
           {erro && (
-            <p className="text-red-400 text-sm mb-4">
+            <p className="text-red-600 text-sm mb-4">
               {erro}
             </p>
           )}
@@ -122,7 +122,7 @@ function Login() {
           {/* Botão */}
           <button
             type="submit"
-            className="w-full h-[50px] rounded-lg bg-gradient-to-r from-[#7c3aed] to-[#a855f7] text-white font-bold shadow-[0_0_25px_rgba(139,92,246,0.3)] transition hover:brightness-110 active:scale-[0.99]"
+            className="w-full h-[50px] rounded-lg bg-[var(--color-digital-orange)] text-[var(--color-off-white)] font-bold transition hover:brightness-110 active:scale-[0.99]"
           >
             Entrar
           </button>
@@ -130,11 +130,11 @@ function Login() {
         </form>
 
         {/* Cadastro */}
-        <p className="text-center text-[#8881a5] text-sm mt-8">
+        <p className="text-center text-[var(--color-dark-purple)] text-sm mt-8">
           Não tem conta?{" "}
           <button
             type="button"
-            className="text-[#a855f7] font-semibold hover:text-[#c084fc] transition"
+            className="text-[var(--color-digital-orange)] font-semibold hover:underline transition"
           >
             Cadastrar-se
           </button>

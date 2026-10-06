@@ -1,1 +1,27 @@
 @import "tailwindcss";
+
+:root {
+  /* Cores principais do projeto */
+  --color-light-purple: #C4ADDF;
+  --color-dark-purple: #47196D;
+  --color-digital-orange: #FF5000;
+  --color-off-white: #FFFEEA;
+
+  /* Cores de apoio */
+  --color-background: var(--color-off-white);
+  --color-text: var(--color-dark-purple);
+  --color-primary: var(--color-dark-purple);
+  --color-secondary: var(--color-light-purple);
+  --color-accent: var(--color-digital-orange);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
