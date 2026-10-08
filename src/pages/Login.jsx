@@ -1,24 +1,30 @@
 import { useState } from "react"
 
-// Guarda o valor digitado no campo de email e senha
 function Login() {
   const [email, setEmail] = useState("")
   const [senha, setSenha] = useState("")
-
-  // Guarda a mensagem de erro do formulário
   const [erro, setErro] = useState("")
+  const [carregando, setCarregando] = useState(false)
 
-  // Executa quando o usuário clica no botão "Entrar"
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault()
 
-    if (!email || !senha) {
-      setErro("Preencha e-mail e senha.")
+    setErro("")
+
+    // validação do e-mail
+    if (!email.trim()) {
+      setErro("Digite seu e-mail.")
       return
     }
 
     if (!email.includes("@")) {
-      setErro("Digite um e-mail válido!")
+      setErro("Digite um e-mail válido.")
+      return
+    }
+
+    // validação da senha
+    if (!senha) {
+      setErro("Digite sua senha.")
       return
     }
 
@@ -27,122 +33,159 @@ function Login() {
       return
     }
 
-    setErro("")
+    try {
+      setCarregando(true)
 
-    console.log("E-mail:", email)
-    console.log("Senha:", senha)
+      const resposta = await fetch("INSIRA_A_URL_DA_API_AQUI", {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({
+          email: email,
+          senha: senha,
+        }),
+      })
+
+      /*
+        RESPOSTA DA API
+
+        Ajuste conforme o formato definido
+        pelo backend.
+      */
+
+      const resultado = await resposta.json()
+
+      if (!resposta.ok) {
+        throw new Error(
+          resultado.mensagem || "E-mail ou senha incorretos."
+        )
+      }
+
+      // Login realizado com sucesso
+      console.log("Login realizado com sucesso!")
+
+      /*
+        Aqui poderá ser feito o redirecionamento
+        para a próxima tela após a integração
+        com o sistema de rotas.
+      */
+
+    } catch (error) {
+      setErro(
+        error.message || "Não foi possível realizar o login."
+      )
+    } finally {
+      setCarregando(false)
+    }
   }
 
   return (
-    <div className="min-h-screen bg-[var(--color-off-white)] text-[var(--color-dark-purple)] flex flex-col items-center justify-center px-4">
+    <main className="min-h-screen bg-[var(--color-light-purple)] flex items-center justify-center p-5">
 
-      {/* Logo */}
-      <div className="flex flex-col items-center mb-12">
+      {/* Card principal */}
+      <div className="w-full max-w-[900px] min-h-[550px] bg-[var(--color-off-white)] rounded-[30px] overflow-hidden flex shadow-[0_20px_45px_rgba(71,25,109,0.25)]">
 
-        <div className="w-[72px] h-[72px] rounded-[18px] bg-[var(--color-dark-purple)] flex items-center justify-center">
-          <span className="text-[var(--color-off-white)] text-2xl font-bold">
-            Q
-          </span>
-        </div>
+        {/* Lado do login */}
+        <section className="w-1/2 flex items-center justify-center p-10 bg-[var(--color-off-white)]">
 
-        <h1 className="mt-5 text-[32px] font-bold tracking-tight">
-          QuizMaster
-        </h1>
+          <form
+            onSubmit={handleLogin}
+            className="w-full max-w-[350px] flex flex-col items-center"
+          >
 
-        <p className="mt-1 text-[var(--color-dark-purple)] text-base">
-          plataforma educacional integradora
-        </p>
+            {/* titulo*/}
+            <h1 className="text-[34px] font-bold text-[var(--color-dark-purple)] mb-5">
+              Entrar
+            </h1>
 
-      </div>
+            {/* descricao */}
+            <p className="text-[13px] text-[var(--color-dark-purple)] mb-6">
+              Entre com seu e-mail e senha
+            </p>
 
-      {/* Card de Login */}
-      <div className="w-full max-w-[504px] rounded-[18px] border-2 border-[var(--color-light-purple)] bg-white px-9 py-10">
-
-        <h2 className="text-[22px] font-bold mb-8 text-[var(--color-dark-purple)]">
-          Entrar na conta
-        </h2>
-
-        <form onSubmit={handleLogin}>
-
-          {/* E-mail */}
-          <div className="mb-5">
-
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-[var(--color-dark-purple)] mb-2"
-            >
-              EMAIL
-            </label>
-
+            {/* email */}
             <input
-              id="email"
               type="email"
+              placeholder="E-mail"
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value)
                 setErro("")
               }}
-              placeholder="seu@email.com"
-              className="w-full h-[52px] rounded-lg border-2 border-[var(--color-light-purple)] bg-[var(--color-off-white)] px-4 text-[var(--color-dark-purple)] placeholder:text-gray-400 outline-none transition focus:border-[var(--color-dark-purple)] focus:ring-1 focus:ring-[var(--color-dark-purple)]"
+              disabled={carregando}
+              autoComplete="email"
+              className="w-full h-[46px] bg-[#e4e2e5] rounded-[7px] px-[15px] mb-3 text-[14px] text-[var(--color-dark-purple)] outline-none focus:ring-2 focus:ring-[var(--color-light-purple)] disabled:opacity-60"
             />
 
-          </div>
-
-          {/* Senha */}
-          <div className="mb-5">
-
-            <label
-              htmlFor="senha"
-              className="block text-sm font-medium text-[var(--color-dark-purple)] mb-2"
-            >
-              SENHA
-            </label>
-
+            {/* Senha */}
             <input
-              id="senha"
               type="password"
+              placeholder="Senha"
               value={senha}
               onChange={(e) => {
                 setSenha(e.target.value)
                 setErro("")
               }}
-              placeholder="••••••••"
-              className="w-full h-[52px] rounded-lg border-2 border-[var(--color-light-purple)] bg-[var(--color-off-white)] px-4 text-[var(--color-dark-purple)] placeholder:text-gray-400 outline-none transition focus:border-[var(--color-dark-purple)] focus:ring-1 focus:ring-[var(--color-dark-purple)]"
+              disabled={carregando}
+              autoComplete="current-password"
+              className="w-full h-[46px] bg-[#e4e2e5] rounded-[7px] px-[15px] mb-3 text-[14px] text-[var(--color-dark-purple)] outline-none focus:ring-2 focus:ring-[var(--color-light-purple)] disabled:opacity-60"
             />
 
-          </div>
+            {/* Mensagem de erro */}
+            {erro && (
+              <p
+                role="alert"
+                className="w-full text-center text-[13px] text-red-700 mb-2"
+              >
+                {erro}
+              </p>
+            )}
 
-          {/* Mensagem de erro */}
-          {erro && (
-            <p className="text-red-600 text-sm mb-4">
-              {erro}
+            {/* Botão entrar */}
+            <button
+              type="submit"
+              disabled={carregando}
+              className="w-[125px] h-[42px] mt-4 rounded-[7px] bg-[var(--color-digital-orange)] text-[var(--color-off-white)] text-[13px] font-bold uppercase cursor-pointer transition duration-200 hover:scale-105 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
+            >
+              {carregando ? "Entrando..." : "Entrar"}
+            </button>
+
+          </form>
+        </section>
+
+        {/* Lado do cadastro */}
+        <section className="w-1/2 bg-[var(--color-dark-purple)] text-[var(--color-off-white)] rounded-l-[160px] flex items-center justify-center p-10">
+
+          <div className="max-w-[360px] text-center">
+
+            {/* titulo */}
+            <h1 className="text-[34px] font-bold text-[var(--color-off-white)] mb-5">
+              Crie sua conta!
+            </h1>
+
+            {/* descricao*/}
+            <p className="text-[14px] leading-relaxed text-[var(--color-light-purple)] mb-7">
+              Cadastre-se para acessar o QuizMaster,
+              responder aos quizzes e acompanhar seu desempenho.
             </p>
-          )}
 
-          {/* Botão */}
-          <button
-            type="submit"
-            className="w-full h-[50px] rounded-lg bg-[var(--color-digital-orange)] text-[var(--color-off-white)] font-bold transition hover:brightness-110 active:scale-[0.99]"
-          >
-            Entrar
-          </button>
+            {/* cadastro */}
+            <button
+              type="button"
+              className="w-[130px] h-[42px] border-2 border-[var(--color-off-white)] rounded-[7px] bg-transparent text-[var(--color-off-white)] text-[12px] font-bold uppercase cursor-pointer transition duration-200 hover:bg-[var(--color-off-white)] hover:text-[var(--color-dark-purple)]"
+            >
+              Cadastrar-se
+            </button>
 
-        </form>
-
-        {/* Cadastro */}
-        <p className="text-center text-[var(--color-dark-purple)] text-sm mt-8">
-          Não tem conta?{" "}
-          <button
-            type="button"
-            className="text-[var(--color-digital-orange)] font-semibold hover:underline transition"
-          >
-            Cadastrar-se
-          </button>
-        </p>
+          </div>
+        </section>
 
       </div>
 
-    </div>
+    </main>
   )
 }
 
