@@ -1,0 +1,42 @@
+# Requisitos Funcionais
+
+## Cadastro e acesso
+
+| ID | Requisito | Perfil | Tela | Endpoint |
+|---|---|---|---|---|
+| RF01 | O sistema deve permitir o cadastro de aluno com nome, usuário e senha. | Aluno | 5.1 Cadastro | `POST /alunos` |
+| RF02 | O sistema deve permitir login de aluno e professor, identificando o perfil e redirecionando para a tela correspondente. | Ambos | 5.2 Login | `POST /login` |
+| RF20 | O sistema deve permitir logout em todas as telas internas. | Ambos | Botão de logout | `POST /logout` |
+
+## Quiz
+
+| ID | Requisito | Perfil | Tela | Endpoint |
+|---|---|---|---|---|
+| RF03 | O sistema deve listar as matérias disponíveis para o aluno escolher. | Aluno | 5.3 Seleção de matéria | `GET /materias` |
+| RF04 | O sistema deve iniciar o quiz de 10 questões correspondente à matéria escolhida; se o aluno já concluiu a matéria, o início é bloqueado e ele é orientado a usar "Refazer quiz". | Aluno | 5.3 → 5.4 | `POST /quiz/iniciar` |
+| RF05 | O sistema deve exibir uma questão por vez, com enunciado e alternativas. | Aluno | 5.4 Quiz | `POST /quiz/iniciar`, `POST /quiz/{id}/responder` |
+| RF06 | O aluno deve poder selecionar uma alternativa, com destaque visual para a opção marcada. | Aluno | 5.4 Quiz | `POST /quiz/{id}/responder` |
+| RF07 | Ao errar, o sistema deve exibir a alternativa correta e avançar para a próxima questão. | Aluno | 5.4 Quiz | `POST /quiz/{id}/responder` |
+| RF08 | O sistema deve exibir um cronômetro decrescente em cada questão, com no mínimo 15 segundos. | Aluno | 5.4 Quiz | `POST /quiz/{id}/responder` (`alternativaId` nulo quando o tempo esgota) |
+| RF09 | O sistema deve exibir a dificuldade da questão e a pontuação correspondente (5, 10 ou 15). | Aluno | 5.4 Quiz | `POST /quiz/iniciar` |
+| RF10 | O sistema deve avançar automaticamente para a próxima questão após cada resposta, seja acerto, erro ou tempo esgotado. | Aluno | 5.4 Quiz | `POST /quiz/{id}/responder` |
+| RF11 | O sistema deve encerrar o quiz ao fim das questões. O tempo total do quiz é a soma dos tempos de cada questão, sem cronômetro total separado. | Aluno | 5.4 → 5.5 | `POST /quiz/{id}/responder` (`quizFinalizado`) |
+
+## Resultado e pontuação
+
+| ID | Requisito | Perfil | Tela | Endpoint |
+|---|---|---|---|---|
+| RF12 | O sistema deve calcular a pontuação ao final do quiz. | Aluno | 5.5 Resultado | `GET /quiz/{id}/resultado` |
+| RF13 | O sistema deve exibir a pontuação obtida. | Aluno | 5.5 Resultado | `GET /quiz/{id}/resultado` |
+| RF14 | O aluno deve poder refazer o quiz, com aviso de confirmação; a tentativa anterior é substituída e as questões são sorteadas aleatoriamente, sem repetir as anteriores. | Aluno | 5.5 Resultado | `POST /quiz/refazer` |
+| RF15 | O sistema deve registrar as respostas certas e erradas, usadas no resultado e no desempenho. | Aluno e professor | 5.5 e 6.2 | `GET /quiz/{id}/resultado`, `GET /professor/desempenho` |
+
+## Ranking e desempenho
+
+| ID | Requisito | Perfil | Tela | Endpoint |
+|---|---|---|---|---|
+| RF16 | O sistema deve exibir o ranking geral com todos os alunos, ordenado pela soma da pontuação dos quizzes de todas as matérias; alunos empatados ficam na mesma posição. | Aluno | 5.6 Ranking | `GET /ranking` |
+| RF17 | O sistema deve destacar a posição do aluno logado no ranking. | Aluno | 5.5 e 5.6 | `GET /ranking` |
+| RF18 | O ranking geral deve ser acessível também ao professor. | Professor | 6.1 Ranking | `GET /ranking` |
+| RF19 | O professor deve poder consultar o desempenho de todos os alunos, com acertos e erros e o detalhe por aluno. | Professor | 6.2 Desempenho | `GET /professor/desempenho`, `GET /professor/desempenho/{alunoId}` |
+

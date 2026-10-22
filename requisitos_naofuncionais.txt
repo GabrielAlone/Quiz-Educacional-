@@ -1,0 +1,17 @@
+# Requisitos Não Funcionais
+
+
+| ID | Categoria | Requisito | Como é atendido |
+|---|---|---|---|
+| RNF01 | Usabilidade | A interface deve ser simples e intuitiva. | Layout limpo, poucos elementos por tela, uma ação principal em cada etapa |
+| RNF02 | Responsividade | O sistema deve funcionar em desktop, tablet e celular. | Recursos de responsividade do Tailwind CSS |
+| RNF03 | Desempenho | O sistema deve responder rápido e não travar a interação. | Indicadores de carregamento e transições rápidas entre telas |
+| RNF04 | Segurança | Credenciais devem ser protegidas e o acesso, autenticado. | Senha com input oculto, senha armazenada como hash, token Bearer em todas as rotas, exceto cadastro e login |
+| RNF05 | Legibilidade | Textos, botões e alternativas devem ser legíveis. | Contraste adequado, fonte legível, foco visível em botões e campos |
+| RNF06 | Confiabilidade | O envio de respostas não deve ser duplicado. | Confirmação visual do envio, evitando duplo clique; API retorna 409 para questão já respondida |
+| RNF07 | Consistência visual | Todas as telas devem seguir o mesmo padrão visual. | Padrão único de cores, fontes, botões e espaçamentos com Tailwind CSS |
+| RNF08 | Manutenibilidade | O código deve ser organizado. | Frontend por páginas e componentes React, seguindo padrão da equipe |
+| RNF09 | Usabilidade | As mensagens ao usuário devem ser claras. | Erros claros para campos inválidos, login incorreto e falhas de conexão |
+| RNF10 | Versionamento | O código deve ser versionado e integrado com revisão. | Branch própria por funcionalidade e integração por Pull Request |
+| RNF11 | Documentação | O sistema deve ser documentado. | Documentações de Frontend e API, wiki do projeto e comentários no código |
+| RNF12 | Privacidade | Dados pessoais devem seguir a LGPD. | Coleta apenas do necessário para o cadastro e texto claro sobre o uso dos dados |
