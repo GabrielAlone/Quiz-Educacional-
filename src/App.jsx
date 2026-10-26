@@ -1,7 +1,8 @@
-import Perfil from "./pages/Perfil";
+
+import Login from "./pages/Login";
 
 function App() {
-  return <Perfil />;
+  return <Login />;
 }
 
 export default App;
