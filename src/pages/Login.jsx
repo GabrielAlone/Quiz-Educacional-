@@ -29,8 +29,10 @@ export default function AuthContainer() {
       setErro("Digite um e-mail válido.");
       return;
     }
-    if (senhaLogin.length < 6) {
-      setErro("A senha deve ter pelo menos 6 caracteres.");
+    if (!/^[A-Za-z0-9]{6,8}$/.test(senhaLogin)) {
+      setErro(
+        "A senha deve ter de 6 a 8 caracteres, contendo somente letras e números.",
+      );
       return;
     }
 
@@ -60,12 +62,16 @@ export default function AuthContainer() {
       setErro("Digite seu nome.");
       return;
     }
+
     if (!emailCadastro.trim() || !emailCadastro.includes("@")) {
       setErro("Digite um e-mail válido.");
       return;
     }
-    if (senhaCadastro.length < 6) {
-      setErro("A senha deve ter pelo menos 6 caracteres.");
+
+    if (!/^[A-Za-z0-9]{6,8}$/.test(senhaCadastro)) {
+      setErro(
+        "A senha deve ter de 6 a 8 caracteres, contendo somente letras e números.",
+      );
       return;
     }
 
